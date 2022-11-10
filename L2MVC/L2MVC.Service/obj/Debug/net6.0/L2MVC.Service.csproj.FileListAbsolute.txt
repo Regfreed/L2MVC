@@ -1,0 +1,14 @@
+D:\kruno\L2MVC\L2MVC\L2MVC.Service\bin\Debug\net6.0\L2MVC.Service.deps.json
+D:\kruno\L2MVC\L2MVC\L2MVC.Service\bin\Debug\net6.0\L2MVC.Service.runtimeconfig.json
+D:\kruno\L2MVC\L2MVC\L2MVC.Service\bin\Debug\net6.0\L2MVC.Service.dll
+D:\kruno\L2MVC\L2MVC\L2MVC.Service\bin\Debug\net6.0\L2MVC.Service.pdb
+D:\kruno\L2MVC\L2MVC\L2MVC.Service\obj\Debug\net6.0\L2MVC.Service.csproj.AssemblyReference.cache
+D:\kruno\L2MVC\L2MVC\L2MVC.Service\obj\Debug\net6.0\L2MVC.Service.GeneratedMSBuildEditorConfig.editorconfig
+D:\kruno\L2MVC\L2MVC\L2MVC.Service\obj\Debug\net6.0\L2MVC.Service.AssemblyInfoInputs.cache
+D:\kruno\L2MVC\L2MVC\L2MVC.Service\obj\Debug\net6.0\L2MVC.Service.AssemblyInfo.cs
+D:\kruno\L2MVC\L2MVC\L2MVC.Service\obj\Debug\net6.0\L2MVC.Service.csproj.CoreCompileInputs.cache
+D:\kruno\L2MVC\L2MVC\L2MVC.Service\obj\Debug\net6.0\L2MVC.Service.dll
+D:\kruno\L2MVC\L2MVC\L2MVC.Service\obj\Debug\net6.0\refint\L2MVC.Service.dll
+D:\kruno\L2MVC\L2MVC\L2MVC.Service\obj\Debug\net6.0\L2MVC.Service.pdb
+D:\kruno\L2MVC\L2MVC\L2MVC.Service\obj\Debug\net6.0\L2MVC.Service.genruntimeconfig.cache
+D:\kruno\L2MVC\L2MVC\L2MVC.Service\obj\Debug\net6.0\ref\L2MVC.Service.dll
