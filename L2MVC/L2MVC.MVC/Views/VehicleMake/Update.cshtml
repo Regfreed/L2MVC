@@ -1,0 +1,22 @@
+﻿@model L2MVC.MVC.Models.UpdateVehicleMakeViewModel
+@{
+}
+
+<form method="post" action="Update">
+    <div class="mb-3">
+        <label for="" class="form-label">Id</label>
+        <input type="text" class="form-control" asp-for="Id" readonly>
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Name</label>
+        <input type="text" class="form-control" asp-for="Name">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Abrv</label>
+        <input type="text" class="form-control" asp-for="Abrv">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+
+    <button type="submit" class="btn btn-danger" asp-action="Delete" asp-controller="VehicleMake">Delete</button>
+</form>

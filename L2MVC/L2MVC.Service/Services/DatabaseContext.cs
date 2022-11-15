@@ -7,7 +7,6 @@ namespace L2MVC.Service.Services
     {
         public DatabaseContext(DbContextOptions options) : base(options)
         {
-
         }
         public DbSet<VehicleMake> VehicleMakes { get; set; }
         public DbSet<VehicleModel> VehicleModels { get; set; }

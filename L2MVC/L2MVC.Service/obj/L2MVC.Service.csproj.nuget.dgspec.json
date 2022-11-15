@@ -58,6 +58,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[7.0.0, )"
+            },
+            "Ninject": {
+              "target": "Package",
+              "version": "[3.3.6, )"
             }
           },
           "imports": [

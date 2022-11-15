@@ -10,7 +10,7 @@ namespace L2MVC.Service.Models
     public class VehicleModel : BaseModel
     {
         [ForeignKey("MakeId")]
-        public int MakeId { get; set; }
+        public Guid MakeId { get; set; }
         public VehicleMake Make { get; set; }
     }
 }
