@@ -1,5 +1,6 @@
 using AutoMapper.Execution;
 using L2MVC.Service.Services;
+using L2MVC.Service.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IVehicleMakeService, VehicleMakeService>();
+builder.Services.AddTransient<IVehicleModelService, VehicleModelService>();
+
 builder.Services.AddDbContext<DatabaseContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DataConnection")));
 

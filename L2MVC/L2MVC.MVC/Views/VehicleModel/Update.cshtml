@@ -1,4 +1,4 @@
-﻿@model L2MVC.MVC.Models.UpdateVehicleMakeViewModel
+﻿@model L2MVC.MVC.Models.UpdateVehicleModelViewModel
 @{
 }
 
@@ -16,8 +16,7 @@
         <input type="text" class="form-control" asp-for="Abrv">
     </div>
 
-    <button type="submit" class="btn btn-primary" asp-action="Update" asp-controller="VehicleMake">Submit</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
 
-    <button type="submit" class="btn btn-danger" asp-controller="VehicleMake" asp-action="Delete">Delete</button>
-    
+    <button type="submit" class="btn btn-danger" asp-action="Delete" asp-controller="VehicleMake">Delete</button>
 </form>

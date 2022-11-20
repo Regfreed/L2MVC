@@ -1,5 +1,6 @@
 ﻿using Azure;
 using L2MVC.Service.Models;
+using L2MVC.Service.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections;
@@ -42,7 +43,6 @@ namespace L2MVC.Service.Services
         {
             return await DatabaseContext.VehicleMakes.ToArrayAsync();
         }
-
         public async Task<VehicleMake> GetVehicleMakeAsync(Guid id)
         {
             var maker = await DatabaseContext.VehicleMakes.FindAsync(id);
@@ -52,14 +52,12 @@ namespace L2MVC.Service.Services
             }
             throw new Exception("not found!");
         }
-
         public async Task<VehicleMake> InsertVehicleMakeAsync(VehicleMake vehicleMake)
         {
             await DatabaseContext.VehicleMakes.AddAsync(vehicleMake);
             await DatabaseContext.SaveChangesAsync();
             return vehicleMake;
         }
-
         public async Task<Boolean> DeleteVehicleMakeAsync(Guid id)
         {
             var maker = await DatabaseContext.VehicleMakes.FindAsync(id);
@@ -73,7 +71,6 @@ namespace L2MVC.Service.Services
             }
             return false;
         }
-
         public async Task<VehicleMake> UpdateVehicleMakeAsync(VehicleMake vehicleMake)
         {
             DatabaseContext.VehicleMakes.Update(vehicleMake);

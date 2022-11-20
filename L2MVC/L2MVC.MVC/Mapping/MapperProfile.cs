@@ -11,6 +11,11 @@ namespace L2MVC.MVC.Mapping
             CreateMap<AddVehicleMakeViewModel, VehicleMake>().ReverseMap();
             CreateMap<UpdateVehicleMakeViewModel, VehicleMake>().ReverseMap();
             CreateMap<VehicleMakeViewModel, VehicleMake>().ReverseMap();
+            CreateMap<VehicleMakeViewModel, UpdateVehicleMakeViewModel>().ReverseMap();
+
+            CreateMap<AddVehicleModelViewModel, VehicleModel>().ReverseMap();
+            CreateMap<UpdateVehicleModelViewModel, VehicleModel>().ReverseMap();
+            CreateMap<VehicleModelViewModel, VehicleModel>().ReverseMap();
         }
     }
 }

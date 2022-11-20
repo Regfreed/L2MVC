@@ -1,0 +1,21 @@
+﻿@model L2MVC.MVC.Models.AddVehicleModelViewModel
+
+@{
+}
+
+<form method="post" action="Add">
+    <div class="mb-3">
+        <label for="" class="form-label">Name</label>
+        <input type="text" class="form-control" asp-for="Name">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Abrv</label>
+        <input type="text" class="form-control" asp-for="Abrv">
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">MakerId</label>
+        <input type="text" class="form-control" asp-for="MakerId">
+    </div>
+  
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

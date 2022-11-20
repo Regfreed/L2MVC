@@ -1,0 +1,29 @@
+﻿@model L2MVC.MVC.Models.VehicleModelViewModel[]
+@{
+}
+
+<h1>Models</h1>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Id</th>
+			<th>MakerId</th>
+			<th>Name</th>
+			<th>Abrv</th>
+			<th> </th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var make in Model)
+		{
+		<tr>
+			<td>@make.Id</td>
+			<td>@make.MakeId</td>
+			<td>@make.Name</td>
+			<td>@make.Abrv</td>
+			<td><a href="VehicleModel/Update/@make.Id">edit</a></td>
+		</tr>
+		}
+	</tbody>
+</table>
