@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "4xD78j+PVJikwlN3sQxz2Z+syAltwnkPic4DjJ7aQE4=",
+  "Hash": "Qa+e7Qz3PzdTiLEWosXe7Dl09a4Kclud2/+vwBSMitw=",
   "Source": "L2MVC.MVC",
   "BasePath": "_content/L2MVC.MVC",
   "Mode": "Default",
@@ -1069,23 +1069,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
-    },
-    {
-      "Identity": "D:\\kruno\\L2MVC\\L2MVC\\L2MVC.MVC\\wwwroot\\web.config",
-      "SourceId": "L2MVC.MVC",
-      "SourceType": "Discovered",
-      "ContentRoot": "D:\\kruno\\L2MVC\\L2MVC\\L2MVC.MVC\\wwwroot\\",
-      "BasePath": "_content/L2MVC.MVC",
-      "RelativePath": "web.config",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\web.config"
     }
   ]
 }

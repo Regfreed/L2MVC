@@ -32,7 +32,7 @@ namespace L2MVC.MVC.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPost]
         public async Task<IActionResult> Update(UpdateVehicleModelViewModel model)
         {
             var entity = Mapper.Map<VehicleModel>(model);
@@ -40,7 +40,7 @@ namespace L2MVC.MVC.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpDelete]
+        [HttpPost]
         public async Task<IActionResult> Delete(UpdateVehicleModelViewModel model)
         {
             var result = await Service.DeleteVehicleModelAsync(model.Id);

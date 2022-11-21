@@ -14,27 +14,44 @@ namespace L2MVC.Service.Services
     public class VehicleMakeService : IVehicleMakeService
     {
         protected DatabaseContext DatabaseContext { get; private set; }
+        
 
         public VehicleMakeService(DatabaseContext databaseContext)
         {
             DatabaseContext = databaseContext;
         }
 
-        public async Task<IEnumerable<VehicleMake>> FindVehicleMakeAsync(string searchPhrase, int pageNumber, int pageSize, string sortBy, string sortOrder)
+        public async Task<IEnumerable<VehicleMake>> FindVehicleMakeAsync(string sortOrder, string searchPhrase, int pageNumber, int pageSize)
         {
-            var query = DatabaseContext.VehicleMakes.Where(x => x.Name == searchPhrase).Skip((pageNumber - 1) * pageSize).Take(pageSize);
-
+            IQueryable<VehicleMake> query;
+            if (!string.IsNullOrWhiteSpace(searchPhrase))
+            {
+                query = DatabaseContext.VehicleMakes.Where(x => x.Name.Contains(searchPhrase) || x.Abrv.Contains(searchPhrase)).Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            }
+            else
+            {
+                query = DatabaseContext.VehicleMakes.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+            }
+            //if (!string.IsNullOrEmpty(searchphrase))
+            //{
+            //    query = query.where(q => q.name.contains(searchphrase)
+            //                           || q.abrv.contains(searchphrase));
+            //}
             //makni hardcodirano!!
             switch (sortOrder)
             {
-                case "asc":
-                    query = query.OrderBy(x => x.Name);
+                case "name_desc":
+                    query = query.OrderByDescending(x => x.Name);
                     break;
-                case "desc":
-                    query = query.OrderByDescending(query => query.Name);
+                case "abrv_desc":
+                    query = query.OrderByDescending(x => x.Abrv);
+                    break;
+                case "Abrv":
+                    query = query.OrderBy(x => x.Abrv);
                     break;
                 default:
-                    throw new Exception("invalid sort order");
+                    query = query.OrderBy(x => x.Name);
+                    break;
             }
 
             return await query.ToArrayAsync();

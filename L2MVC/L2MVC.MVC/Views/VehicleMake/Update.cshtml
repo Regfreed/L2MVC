@@ -2,7 +2,7 @@
 @{
 }
 
-<form method="post" action="Update">
+<form method="put" action="Update">
     <div class="mb-3">
         <label for="" class="form-label">Id</label>
         <input type="text" class="form-control" asp-for="Id" readonly>
@@ -16,8 +16,8 @@
         <input type="text" class="form-control" asp-for="Abrv">
     </div>
 
-    <button type="submit" class="btn btn-primary" asp-action="Update" asp-controller="VehicleMake">Submit</button>
+    <button name="X-HTTP-Method-Override" type="submit" class="btn btn-primary" asp-action="Update" asp-controller="VehicleMake">Submit</button>
 
-    <button type="submit" class="btn btn-danger" asp-controller="VehicleMake" asp-action="Delete">Delete</button>
+    <button name="X-HTTP-Method-Override" type="submit" class="btn btn-danger" asp-controller="VehicleMake" asp-action="Delete">Delete</button>
     
 </form>

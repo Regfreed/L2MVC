@@ -4,7 +4,9 @@ using L2MVC.MVC.Models;
 using L2MVC.Service.Models;
 using L2MVC.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using PagedList;
 
 namespace L2MVC.MVC.Controllers
 {
@@ -20,9 +22,27 @@ namespace L2MVC.MVC.Controllers
             //this.databaseContext = databaseContext;
         }
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder,string currentFilter, string searchPhrase, int? page)
         {
-            var model = await Service.FindVehicleMakeAsync();
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrWhiteSpace(sortOrder) ? "name_desc" : "";
+            ViewBag.AbrvSortParm = sortOrder == "Abrv" ? "abrv_desc" : "Abrv";
+
+            if (searchPhrase != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchPhrase = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchPhrase;
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            //var model = await Service.FindVehicleMakeAsync();
+            var model = await Service.FindVehicleMakeAsync(sortOrder, searchPhrase, pageNumber, pageSize);
             var map = Mapper.Map<VehicleMakeViewModel[]>(model);
             return View("Index", map);
         }

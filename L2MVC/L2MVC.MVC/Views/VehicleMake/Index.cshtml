@@ -4,12 +4,20 @@
 
 <h1>Makers</h1>
 
+@using (Html.BeginForm())
+{
+	<p>
+		Find: @Html.TextBox("Search")
+		<input type="submit" value="Search" />
+	</p>
+}
+
 <table class="table">
 	<thead>
 		<tr>
 			<th>Id</th>
-			<th>Name</th>
-			<th>Abrv</th>
+			<th>@Html.ActionLink("Name", "Index", new { sortOrder = ViewBag.NameSortParm })</th>
+			<th>@Html.ActionLink("Abrv", "Index", new { sortOrder = ViewBag.AbrvSortParm })</th>
 			<th> </th>
 		</tr>
 	</thead>
