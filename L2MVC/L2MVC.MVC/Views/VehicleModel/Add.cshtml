@@ -13,8 +13,8 @@
         <input type="text" class="form-control" asp-for="Abrv">
     </div>
     <div class="mb-3">
-        <label for="" class="form-label">MakerId</label>
-        <input type="text" class="form-control" asp-for="MakerId">
+        <label for="" class="form-label">Maker</label>
+        <select class="form-select" asp-items="Model.MakerList"></select>
     </div>
   
     <button type="submit" class="btn btn-primary">Submit</button>

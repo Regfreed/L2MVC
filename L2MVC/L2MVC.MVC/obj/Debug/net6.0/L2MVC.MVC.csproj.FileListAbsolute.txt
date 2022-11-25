@@ -286,5 +286,3 @@ D:\kruno\L2MVC\L2MVC\L2MVC.MVC\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.W
 D:\kruno\L2MVC\L2MVC\L2MVC.MVC\bin\Debug\net6.0\AutoMapper.dll
 D:\kruno\L2MVC\L2MVC\L2MVC.MVC\bin\Debug\net6.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
 D:\kruno\L2MVC\L2MVC\L2MVC.MVC\bin\Debug\net6.0\Ninject.dll
-D:\kruno\L2MVC\L2MVC\L2MVC.MVC\bin\Debug\net6.0\PagedList.dll
-D:\kruno\L2MVC\L2MVC\L2MVC.MVC\bin\Debug\net6.0\PagedList.Mvc.dll

@@ -2,11 +2,12 @@
 using L2MVC.MVC.Mapping;
 using L2MVC.MVC.Models;
 using L2MVC.Service.Models;
+using L2MVC.Service.Services;
 using L2MVC.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using PagedList;
+using System.Linq;
 
 namespace L2MVC.MVC.Controllers
 {
@@ -21,13 +22,14 @@ namespace L2MVC.MVC.Controllers
             Mapper = mapper;
             //this.databaseContext = databaseContext;
         }
-        [HttpGet]
-        public async Task<IActionResult> Index(string sortOrder,string currentFilter, string searchPhrase, int? page)
-        {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSortParm = String.IsNullOrWhiteSpace(sortOrder) ? "name_desc" : "";
-            ViewBag.AbrvSortParm = sortOrder == "Abrv" ? "abrv_desc" : "Abrv";
 
+        [HttpGet]
+        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchPhrase, int? page)
+        {
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParm"] = String.IsNullOrWhiteSpace(sortOrder) ? "name_desc" : "";
+            ViewData["AbrvSortParm"] = sortOrder == "abrv" ? "abrv_desc" : "abrv";
+            
             if (searchPhrase != null)
             {
                 page = 1;
@@ -36,15 +38,13 @@ namespace L2MVC.MVC.Controllers
             {
                 searchPhrase = currentFilter;
             }
-
-            ViewBag.CurrentFilter = searchPhrase;
-
+            
+            ViewData["CurrentFilter"] = searchPhrase;
             int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            //var model = await Service.FindVehicleMakeAsync();
-            var model = await Service.FindVehicleMakeAsync(sortOrder, searchPhrase, pageNumber, pageSize);
-            var map = Mapper.Map<VehicleMakeViewModel[]>(model);
-            return View("Index", map);
+            var model = await Service.FindVehicleMakeAsync(sortOrder, searchPhrase);
+            var map = Mapper.Map<IEnumerable<VehicleMakeViewModel>>(model);     
+            
+            return View("Index", PaginatedList<VehicleMakeViewModel>.Create(map, page ?? 1, pageSize));
         }
 
         [HttpGet]
@@ -57,12 +57,6 @@ namespace L2MVC.MVC.Controllers
         public async Task<IActionResult> Add(AddVehicleMakeViewModel addVehicleMakeRequest)
         {
             var maker = Mapper.Map<VehicleMake>(addVehicleMakeRequest);
-            //var maker = new VehicleMake()
-            //{
-            //    Id = Guid.NewGuid(),
-            //    Name = addVehicleMakeRequest.Name,
-            //    Abrv = addVehicleMakeRequest.Abrv
-            //};
             await Service.InsertVehicleMakeAsync(maker);
 
             return RedirectToAction("Index");

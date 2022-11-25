@@ -1,5 +1,4 @@
-﻿using Azure;
-using L2MVC.Service.Models;
+﻿using L2MVC.Service.Models;
 using L2MVC.Service.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,29 +14,19 @@ namespace L2MVC.Service.Services
     {
         protected DatabaseContext DatabaseContext { get; private set; }
         
-
         public VehicleMakeService(DatabaseContext databaseContext)
         {
             DatabaseContext = databaseContext;
         }
 
-        public async Task<IEnumerable<VehicleMake>> FindVehicleMakeAsync(string sortOrder, string searchPhrase, int pageNumber, int pageSize)
+        public async Task<IEnumerable<VehicleMake>> FindVehicleMakeAsync(string sortOrder, string searchPhrase)
         {
-            IQueryable<VehicleMake> query;
+            var query = from q in DatabaseContext.VehicleMakes select q;
             if (!string.IsNullOrWhiteSpace(searchPhrase))
             {
-                query = DatabaseContext.VehicleMakes.Where(x => x.Name.Contains(searchPhrase) || x.Abrv.Contains(searchPhrase)).Skip((pageNumber - 1) * pageSize).Take(pageSize);
+                query = DatabaseContext.VehicleMakes.Where(x => x.Name.Contains(searchPhrase) || x.Abrv.Contains(searchPhrase));//.Skip((pageNumber - 1) * pageSize).Take(pageSize);
             }
-            else
-            {
-                query = DatabaseContext.VehicleMakes.Skip((pageNumber - 1) * pageSize).Take(pageSize);
-            }
-            //if (!string.IsNullOrEmpty(searchphrase))
-            //{
-            //    query = query.where(q => q.name.contains(searchphrase)
-            //                           || q.abrv.contains(searchphrase));
-            //}
-            //makni hardcodirano!!
+            
             switch (sortOrder)
             {
                 case "name_desc":
@@ -53,12 +42,8 @@ namespace L2MVC.Service.Services
                     query = query.OrderBy(x => x.Name);
                     break;
             }
-
-            return await query.ToArrayAsync();
-        }
-        public async Task<IEnumerable<VehicleMake>> FindVehicleMakeAsync()
-        {
-            return await DatabaseContext.VehicleMakes.ToArrayAsync();
+            await query.AnyAsync();
+            return query;
         }
         public async Task<VehicleMake> GetVehicleMakeAsync(Guid id)
         {
