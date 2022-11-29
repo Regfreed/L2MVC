@@ -8,8 +8,12 @@
         <input type="text" class="form-control" asp-for="Id" readonly>
     </div>
     <div class="mb-3">
-        <label for="" class="form-label">MakerId</label>
-        <input type="text" class="form-control" asp-for="Id" readonly>
+        <label for="" class="form-label">Make</label>
+        <input type="text" class="form-control" asp-for="MakeId" readonly>
+    </div>
+    <div class="mb-3">
+        <label for="" class="form-label">Maker</label>
+        <select class="form-select" asp-items="Model.MakerList" asp-for="MakeName"></select>
     </div>
     <div class="mb-3">
         <label for="" class="form-label">Name</label>

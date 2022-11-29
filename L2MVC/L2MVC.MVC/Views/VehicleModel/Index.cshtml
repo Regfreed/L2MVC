@@ -24,20 +24,22 @@
 		<tr>
 			<th>Id</th>
 			<th>MakerId</th>
-			<th><a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.FirstOrDefault().Name)</a></th>
-			<th><a asp-action="Index" asp-route-sortOrder="@ViewData["AbrvSortParm"]">@Html.DisplayNameFor(model => model.FirstOrDefault().Abrv)</a></th>
+			<th><a asp-action="Index" asp-route-sortOrder="@ViewData["MakeSortParm"]">@Html.DisplayNameFor(model => model.First().MakeName)</a></th>
+			<th><a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.First().Name)</a></th>
+			<th><a asp-action="Index" asp-route-sortOrder="@ViewData["AbrvSortParm"]">@Html.DisplayNameFor(model => model.First().Abrv)</a></th>
 			<th> </th>
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var make in Model)
+		@foreach (var mod in Model)
 		{
 		<tr>
-			<td>@make.Id</td>
-			<td>@make.MakeId</td>
-			<td>@make.Name</td>
-			<td>@make.Abrv</td>
-			<td><a href="VehicleModel/Update/@make.Id">edit</a></td>
+			<td>@mod.Id</td>
+			<td>@mod.MakeId</td>
+			<td>@mod.MakeName</td>
+			<td>@mod.Name</td>
+			<td>@mod.Abrv</td>
+			<td><a href="VehicleModel/Update/@mod.Id">edit</a></td>
 		</tr>
 		}
 	</tbody>

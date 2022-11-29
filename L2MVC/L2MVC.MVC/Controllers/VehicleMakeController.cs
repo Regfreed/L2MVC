@@ -1,13 +1,10 @@
 ﻿using AutoMapper;
-using L2MVC.MVC.Mapping;
 using L2MVC.MVC.Models;
 using L2MVC.Service.Models;
 using L2MVC.Service.Services;
 using L2MVC.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+
 
 namespace L2MVC.MVC.Controllers
 {
@@ -20,7 +17,6 @@ namespace L2MVC.MVC.Controllers
         {
             Service = vehicleMakeService;
             Mapper = mapper;
-            //this.databaseContext = databaseContext;
         }
 
         [HttpGet]
@@ -44,7 +40,7 @@ namespace L2MVC.MVC.Controllers
             var model = await Service.FindVehicleMakeAsync(sortOrder, searchPhrase);
             var map = Mapper.Map<IEnumerable<VehicleMakeViewModel>>(model);     
             
-            return View("Index", PaginatedList<VehicleMakeViewModel>.Create(map, page ?? 1, pageSize));
+            return View("Index", PaginatedList<VehicleMakeViewModel>.CreateAsync(map, page ?? 1, pageSize));
         }
 
         [HttpGet]
@@ -57,9 +53,13 @@ namespace L2MVC.MVC.Controllers
         public async Task<IActionResult> Add(AddVehicleMakeViewModel addVehicleMakeRequest)
         {
             var maker = Mapper.Map<VehicleMake>(addVehicleMakeRequest);
-            await Service.InsertVehicleMakeAsync(maker);
-
-            return RedirectToAction("Index");
+            
+            if(await Service.InsertVehicleMakeAsync(maker))
+            {
+                return RedirectToAction("Index");
+            }
+            
+            return View("Add", addVehicleMakeRequest);     
         }
 
         [HttpGet]

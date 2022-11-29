@@ -1,11 +1,4 @@
-﻿using L2MVC.Service.Models;
-using L2MVC.Service.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using L2MVC.Service.Services.Interfaces;
 
 namespace L2MVC.Service.Services
 {
@@ -26,7 +19,7 @@ namespace L2MVC.Service.Services
 
         public bool HasNextPage => PageIndex < TotalPages;
 
-        public static PaginatedList<T> Create(IEnumerable<T> source, int pageIndex, int pageSize)
+        public static PaginatedList<T> CreateAsync(IEnumerable<T> source, int pageIndex, int pageSize)
         {
             var count = source.Count();
             var items = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();

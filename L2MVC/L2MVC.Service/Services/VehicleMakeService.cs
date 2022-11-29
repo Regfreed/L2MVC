@@ -1,12 +1,7 @@
 ﻿using L2MVC.Service.Models;
 using L2MVC.Service.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
 
 namespace L2MVC.Service.Services
 {
@@ -27,7 +22,7 @@ namespace L2MVC.Service.Services
                 query = DatabaseContext.VehicleMakes.Where(x => x.Name.Contains(searchPhrase) || x.Abrv.Contains(searchPhrase));//.Skip((pageNumber - 1) * pageSize).Take(pageSize);
             }
             
-            switch (sortOrder)
+            switch(sortOrder)
             {
                 case "name_desc":
                     query = query.OrderByDescending(x => x.Name);
@@ -42,9 +37,10 @@ namespace L2MVC.Service.Services
                     query = query.OrderBy(x => x.Name);
                     break;
             }
-            await query.AnyAsync();
-            return query;
+
+            return await query.ToArrayAsync();
         }
+
         public async Task<VehicleMake> GetVehicleMakeAsync(Guid id)
         {
             var maker = await DatabaseContext.VehicleMakes.FindAsync(id);
@@ -54,12 +50,19 @@ namespace L2MVC.Service.Services
             }
             throw new Exception("not found!");
         }
-        public async Task<VehicleMake> InsertVehicleMakeAsync(VehicleMake vehicleMake)
+
+        public async Task<Boolean> InsertVehicleMakeAsync(VehicleMake vehicleMake)
         {
-            await DatabaseContext.VehicleMakes.AddAsync(vehicleMake);
-            await DatabaseContext.SaveChangesAsync();
-            return vehicleMake;
+            if (DatabaseContext.VehicleMakes.Where(x => x.Name == vehicleMake.Name).IsNullOrEmpty())
+            {
+                await DatabaseContext.VehicleMakes.AddAsync(vehicleMake);
+                await DatabaseContext.SaveChangesAsync();
+                return true;
+            }
+
+            return false;
         }
+
         public async Task<Boolean> DeleteVehicleMakeAsync(Guid id)
         {
             var maker = await DatabaseContext.VehicleMakes.FindAsync(id);
@@ -71,8 +74,10 @@ namespace L2MVC.Service.Services
 
                 return true;
             }
+
             return false;
         }
+
         public async Task<VehicleMake> UpdateVehicleMakeAsync(VehicleMake vehicleMake)
         {
             DatabaseContext.VehicleMakes.Update(vehicleMake);

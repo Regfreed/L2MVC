@@ -1,5 +1,4 @@
 ﻿@model L2MVC.MVC.Models.AddVehicleModelViewModel
-
 @{
 }
 
@@ -14,7 +13,7 @@
     </div>
     <div class="mb-3">
         <label for="" class="form-label">Maker</label>
-        <select class="form-select" asp-items="Model.MakerList"></select>
+        <select class="form-select" asp-items="Model.MakerList" asp-for="MakeId"></select>
     </div>
   
     <button type="submit" class="btn btn-primary">Submit</button>
