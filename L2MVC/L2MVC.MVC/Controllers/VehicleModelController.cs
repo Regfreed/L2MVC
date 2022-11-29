@@ -6,6 +6,7 @@ using L2MVC.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace L2MVC.MVC.Controllers
 {
@@ -51,7 +52,6 @@ namespace L2MVC.MVC.Controllers
         {   
             var makers = await Service.GetAllMakersAsync();
             var model = new AddVehicleModelViewModel() { MakerList = new List<SelectListItem>()};
-            //model.MakerList = new List<SelectListItem>();
 
             foreach (var maker in makers)
             {
@@ -77,7 +77,7 @@ namespace L2MVC.MVC.Controllers
             vehicleModel.MakerList = new List<SelectListItem>();
             foreach (var maker in makers)
             {
-                vehicleModel.MakerList.Add(new SelectListItem { Text = maker.Name, Value = maker.Name});
+                vehicleModel.MakerList.Add(new SelectListItem { Text = maker.Name, Value = maker.Name, Selected = maker.Id == vehicleModel.MakeId });
             }
             return View(vehicleModel);
         }
