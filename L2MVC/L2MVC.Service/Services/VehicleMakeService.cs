@@ -78,11 +78,15 @@ namespace L2MVC.Service.Services
             return false;
         }
 
-        public async Task<VehicleMake> UpdateVehicleMakeAsync(VehicleMake vehicleMake)
+        public async Task<Boolean> UpdateVehicleMakeAsync(VehicleMake vehicleMake)
         {
-            DatabaseContext.VehicleMakes.Update(vehicleMake);
-            await DatabaseContext.SaveChangesAsync();
-            return vehicleMake;
+            if (DatabaseContext.VehicleMakes.Where(x => x.Name == vehicleMake.Name).IsNullOrEmpty())
+            {
+                DatabaseContext.VehicleMakes.Update(vehicleMake);
+                await DatabaseContext.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
     }
 }

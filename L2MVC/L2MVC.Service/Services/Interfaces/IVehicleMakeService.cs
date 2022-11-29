@@ -8,6 +8,6 @@ namespace L2MVC.Service.Services.Interfaces
         Task<IEnumerable<VehicleMake>> FindVehicleMakeAsync(string sortOrder, string searchPhrase);
         Task<VehicleMake> GetVehicleMakeAsync(Guid id);
         Task<Boolean> InsertVehicleMakeAsync(VehicleMake vehicleMake);
-        Task<VehicleMake> UpdateVehicleMakeAsync(VehicleMake vehicleMake);
+        Task<Boolean> UpdateVehicleMakeAsync(VehicleMake vehicleMake);
     }
 }

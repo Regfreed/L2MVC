@@ -73,8 +73,8 @@ namespace L2MVC.MVC.Controllers
         public async Task<IActionResult> Update(UpdateVehicleMakeViewModel model)
         {
             var entity = Mapper.Map<VehicleMake>(model);
-            await Service.UpdateVehicleMakeAsync(entity);
-            return RedirectToAction("Index");
+            if(await Service.UpdateVehicleMakeAsync(entity)) return RedirectToAction("Index");
+            return View("Update", model);
         }
 
         [HttpPost]
