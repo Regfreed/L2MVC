@@ -1,5 +1,4 @@
-﻿using Azure;
-using L2MVC.Service.Models;
+﻿using L2MVC.Service.Models;
 using L2MVC.Service.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,7 +36,7 @@ namespace L2MVC.Service.Services
                 case "abrv_desc":
                     query = query.OrderByDescending(x => x.Abrv);
                     break;
-                case "Abrv":
+                case "abrv":
                     query = query.OrderBy(x => x.Abrv);
                     break;
                 default:

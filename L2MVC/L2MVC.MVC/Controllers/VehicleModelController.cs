@@ -24,7 +24,7 @@ namespace L2MVC.MVC.Controllers
         {
             ViewData["CurrentSort"] = sortOrder;
             ViewData["MakeSortParm"] = String.IsNullOrWhiteSpace(sortOrder) ? "make_desc" : "";
-            ViewData["NameSortParm"] = String.IsNullOrWhiteSpace(sortOrder) ? "name_desc" : "name";
+            ViewData["NameSortParm"] = sortOrder == "name" ? "name_desc" : "name";
             ViewData["AbrvSortParm"] = sortOrder == "abrv" ? "abrv_desc" : "abrv";
 
             if (searchPhrase != null)

@@ -29,11 +29,11 @@ namespace L2MVC.MVC.Mapping
             CreateMap<VehicleModelViewModel, VehicleModel>().ReverseMap();
             CreateMap<AddVehicleModelViewModel, VehicleMake>().ReverseMap();
 
-            CreateMap<IPaginatedList<VehicleModel>, PaginatedList<VehicleModelViewModel>>().ForMember("Item", opt => opt.Ignore()).ConstructUsing((source, contex) => 
-            { 
+            CreateMap<IPaginatedList<VehicleModel>, PaginatedList<VehicleModelViewModel>>().ForMember("Item", opt => opt.Ignore()).ConstructUsing((source, contex) =>
+            {
                 var list = new List<VehicleModelViewModel>();
-                foreach(var item in source)
-                {    
+                foreach (var item in source)
+                {
                     var destinationItem = contex.Mapper.Map<VehicleModelViewModel>(item);
                     list.Add(destinationItem);
                 }

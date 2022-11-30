@@ -1,7 +1,5 @@
 ﻿using L2MVC.Service.Models;
 using L2MVC.Service.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace L2MVC.Service.Services
 {

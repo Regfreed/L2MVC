@@ -1,5 +1,3 @@
-using AutoMapper.Execution;
-using L2MVC.Service.Models;
 using L2MVC.Service.Services;
 using L2MVC.Service.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
