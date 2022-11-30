@@ -5,8 +5,6 @@ using L2MVC.Service.Services;
 using L2MVC.Service.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace L2MVC.MVC.Controllers
 {
@@ -41,10 +39,10 @@ namespace L2MVC.MVC.Controllers
             ViewData["CurrentFilter"] = searchPhrase;
             int pageSize = 5;
 
-            var model = await Service.FindVehicleModelAsync(sortOrder, searchPhrase);           
-            var map = Mapper.Map<IEnumerable<VehicleModelViewModel>>(model);
+            var result = await Service.FindVehicleModelAsync(sortOrder, searchPhrase, page ?? 1, pageSize);           
+            var map = Mapper.Map<PaginatedList<VehicleModelViewModel>>(result);
 
-            return View("Index", PaginatedList<VehicleModelViewModel>.CreateAsync(map, page ?? 1, pageSize));
+            return View("Index", map);
         }
 
         [HttpGet]
@@ -77,7 +75,7 @@ namespace L2MVC.MVC.Controllers
             vehicleModel.MakerList = new List<SelectListItem>();
             foreach (var maker in makers)
             {
-                vehicleModel.MakerList.Add(new SelectListItem { Text = maker.Name, Value = maker.Name, Selected = maker.Id == vehicleModel.MakeId });
+                vehicleModel.MakerList.Add(new SelectListItem { Text = maker.Name, Value = maker.Id.ToString(), Selected = maker.Id == vehicleModel.MakeId });
             }
             return View(vehicleModel);
         }
@@ -85,12 +83,9 @@ namespace L2MVC.MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(UpdateVehicleModelViewModel model)
         {
-            if (model.MakeName != null)
+            if (model.MakeId != Guid.Empty)
             {
                 var entity = Mapper.Map<VehicleModel>(model);
-
-                entity.Make = await Service.GetMakeAsync(model.MakeName);
-                entity.MakeId = entity.Make.Id;
 
                 await Service.UpdateVehicleModelAsync(entity);
                 return RedirectToAction("Index");

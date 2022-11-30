@@ -1,4 +1,5 @@
-﻿using L2MVC.Service.Models;
+﻿using Azure;
+using L2MVC.Service.Models;
 using L2MVC.Service.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,17 +14,13 @@ namespace L2MVC.Service.Services
             DatabaseContext = databaseContext;
         }
 
-        public async Task<IEnumerable<VehicleModel>> FindVehicleModelAsync(string sortOrder, string searchPhrase)
+        public async Task<IPaginatedList<VehicleModel>> FindVehicleModelAsync(string sortOrder, string searchPhrase, int page, int pageSize)
         {
-            var query = from q in DatabaseContext.VehicleModels select q;
+            var query = from q in DatabaseContext.VehicleModels.Include(x => x.Make) select q;
        
             if (!string.IsNullOrWhiteSpace(searchPhrase))
             {
-                query = DatabaseContext.VehicleModels.Where(x => x.Name.Contains(searchPhrase) || x.Abrv.Contains(searchPhrase));
-            }
-            foreach (var item in query)
-            {
-                item.Make = await GetMakeAsync(item);
+                query = query.Where(x => x.Name.Contains(searchPhrase) || x.Abrv.Contains(searchPhrase));
             }
 
             switch (sortOrder)
@@ -47,8 +44,8 @@ namespace L2MVC.Service.Services
                     query = query.OrderBy(x => x.Make.Name);
                     break;
             }
-
-            return await query.ToArrayAsync();
+            
+            return await PaginatedList<VehicleModel>.CreateAsync(query, page, pageSize);
         }
         
         public async Task<VehicleModel> GetVehicleModelAsync(Guid id)
@@ -92,23 +89,6 @@ namespace L2MVC.Service.Services
         {
             var makers = await DatabaseContext.VehicleMakes.ToListAsync();
             return makers;
-        }
-
-        public async Task<VehicleMake> GetMakeAsync(string makerName)
-        {
-            var model = await DatabaseContext.VehicleMakes.Where(x => x.Name == makerName).FirstAsync();
-            return model;
-        }
-
-        public async Task<VehicleMake> GetMakeAsync(VehicleModel model)
-        {
-            var make = await DatabaseContext.VehicleMakes.FindAsync(model.MakeId);
-            
-            if (make != null)
-            {
-                return make;
-            }
-            throw new Exception("not found!");
         }
     }
 }

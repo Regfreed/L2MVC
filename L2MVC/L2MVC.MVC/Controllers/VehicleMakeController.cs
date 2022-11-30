@@ -25,7 +25,7 @@ namespace L2MVC.MVC.Controllers
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParm"] = String.IsNullOrWhiteSpace(sortOrder) ? "name_desc" : "";
             ViewData["AbrvSortParm"] = sortOrder == "abrv" ? "abrv_desc" : "abrv";
-            
+
             if (searchPhrase != null)
             {
                 page = 1;
@@ -34,13 +34,13 @@ namespace L2MVC.MVC.Controllers
             {
                 searchPhrase = currentFilter;
             }
-            
+
             ViewData["CurrentFilter"] = searchPhrase;
             int pageSize = 3;
-            var model = await Service.FindVehicleMakeAsync(sortOrder, searchPhrase);
-            var map = Mapper.Map<IEnumerable<VehicleMakeViewModel>>(model);     
-            
-            return View("Index", PaginatedList<VehicleMakeViewModel>.CreateAsync(map, page ?? 1, pageSize));
+            var result = await Service.FindVehicleMakeAsync(sortOrder, searchPhrase, page ?? 1 , pageSize);
+            var map = Mapper.Map<PaginatedList<VehicleMakeViewModel>>(result);
+
+            return View("Index", map);
         }
 
         [HttpGet]

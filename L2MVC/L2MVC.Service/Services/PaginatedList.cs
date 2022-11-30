@@ -1,14 +1,19 @@
 ﻿using L2MVC.Service.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace L2MVC.Service.Services
 {
-    public class PaginatedList<T> : List<T>, IPaginatedList
+    public class PaginatedList<T> : List<T>, IPaginatedList<T>
     {
         public int PageIndex { get; private set; }
         public int TotalPages { get; private set; }
+        public int PageSize { get; set; }
+        public int TotalItems { get; private set; }
 
-        public PaginatedList(List<T> items, int count, int pageIndex, int pageSize)
+        public PaginatedList(IEnumerable<T> items, int count, int pageIndex, int pageSize)
         {
+            TotalItems = count;
+            PageSize = pageSize;
             PageIndex = pageIndex;
             TotalPages = (int)Math.Ceiling(count / (double)pageSize);
 
@@ -19,10 +24,10 @@ namespace L2MVC.Service.Services
 
         public bool HasNextPage => PageIndex < TotalPages;
 
-        public static PaginatedList<T> CreateAsync(IEnumerable<T> source, int pageIndex, int pageSize)
+        public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
-            var count = source.Count();
-            var items = source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+            var count = await source.CountAsync();
+            var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
             return new PaginatedList<T>(items, count, pageIndex, pageSize);
         }
     }

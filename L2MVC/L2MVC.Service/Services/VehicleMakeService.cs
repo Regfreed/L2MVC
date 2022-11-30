@@ -14,12 +14,12 @@ namespace L2MVC.Service.Services
             DatabaseContext = databaseContext;
         }
 
-        public async Task<IEnumerable<VehicleMake>> FindVehicleMakeAsync(string sortOrder, string searchPhrase)
+        public async Task<IPaginatedList<VehicleMake>> FindVehicleMakeAsync(string sortOrder, string searchPhrase, int page, int pageSize)
         {
             var query = from q in DatabaseContext.VehicleMakes select q;
             if (!string.IsNullOrWhiteSpace(searchPhrase))
             {
-                query = DatabaseContext.VehicleMakes.Where(x => x.Name.Contains(searchPhrase) || x.Abrv.Contains(searchPhrase));//.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+                query = DatabaseContext.VehicleMakes.Where(x => x.Name.Contains(searchPhrase) || x.Abrv.Contains(searchPhrase));
             }
             
             switch(sortOrder)
@@ -38,7 +38,7 @@ namespace L2MVC.Service.Services
                     break;
             }
 
-            return await query.ToArrayAsync();
+            return await PaginatedList<VehicleMake>.CreateAsync(query,page,pageSize);
         }
 
         public async Task<VehicleMake> GetVehicleMakeAsync(Guid id)
@@ -53,7 +53,7 @@ namespace L2MVC.Service.Services
 
         public async Task<Boolean> InsertVehicleMakeAsync(VehicleMake vehicleMake)
         {
-            if (DatabaseContext.VehicleMakes.Where(x => x.Name == vehicleMake.Name).IsNullOrEmpty())
+            if (DatabaseContext.VehicleMakes.FirstOrDefault(x => x.Name == vehicleMake.Name) == null)
             {
                 await DatabaseContext.VehicleMakes.AddAsync(vehicleMake);
                 await DatabaseContext.SaveChangesAsync();
@@ -80,7 +80,7 @@ namespace L2MVC.Service.Services
 
         public async Task<Boolean> UpdateVehicleMakeAsync(VehicleMake vehicleMake)
         {
-            if (DatabaseContext.VehicleMakes.Where(x => x.Name == vehicleMake.Name).IsNullOrEmpty())
+            if (DatabaseContext.VehicleMakes.FirstOrDefault(x => x.Name == vehicleMake.Name) == null)
             {
                 DatabaseContext.VehicleMakes.Update(vehicleMake);
                 await DatabaseContext.SaveChangesAsync();
